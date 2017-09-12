@@ -1,5 +1,12 @@
 """Load extensions."""
 
+import os
+import sys
+
+CURDIR = os.path.abspath(os.path.dirname(__file__))
+sys.path.insert(0, os.path.join(CURDIR, '..', '..', 'deps'))
+
+
 LINTERS = {}
 
 try:
@@ -31,6 +38,18 @@ except ImportError:
 try:
     from pylama.lint.pylama_radon import Linter
     LINTERS['radon'] = Linter()
+except ImportError:
+    pass
+
+try:
+    from pylama.lint.pylama_pylint import Linter
+    LINTERS['pylint'] = Linter()
+except ImportError:
+    pass
+
+try:
+    from isort.pylama_isort import Linter
+    LINTERS['isort'] = Linter()
 except ImportError:
     pass
 
